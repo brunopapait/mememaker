@@ -3,6 +3,7 @@ import qs from 'qs';
 
 import { Wrapper, Card, Templates, Form, Button } from './style';
 import logo from '../../images/logo.svg';
+import Swal from 'sweetalert2';
 
 export default function Home() {
 	const [templates, setTemplates] = useState([]);
@@ -33,7 +34,10 @@ export default function Home() {
 	async function onSubmit(e) {
 		e.preventDefault();
 		if (boxes.length === 0) {
-			return;
+			return Swal.fire({
+				icon: 'error',
+				text: 'Por favor digite os campos abaixo!',
+			});
 		}
 		const params = qs.stringify({
 			template_id: selectedTemplate.id,
@@ -59,8 +63,12 @@ export default function Home() {
 			<img src={logo} alt="MemeMaker" />
 			<Card>
 				{generatedMeme ? <>
-					<img src={generatedMeme} alt="Generated Meme" />
-					<Button onClick={handleReset}> Criar outro meme </Button>
+					<div style={{ display: 'flex', justifyContent: 'center' }}>
+						<a target='_blank' href={generatedMeme} >
+							<img style={{ paddingBottom: '5px' }} src={generatedMeme} alt="Generated Meme" />
+						</a>
+					</div>
+					<Button onClick={handleReset}> Criar um novo meme </Button>
 				</> : <>
 						<h2>Selecione um template</h2>
 						<Templates>
