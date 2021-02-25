@@ -32,6 +32,9 @@ export default function Home() {
 
 	async function onSubmit(e) {
 		e.preventDefault();
+		if (boxes.length === 0) {
+			return;
+		}
 		const params = qs.stringify({
 			template_id: selectedTemplate.id,
 			username: 'brunopapait123',
